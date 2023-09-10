@@ -2,17 +2,15 @@ package com.github.wnameless.spring.boot.up.embedded.keycloak.config;
 
 import org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher;
 import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-@EnableAutoConfiguration(
-    exclude = {LiquibaseAutoConfiguration.class, DataSourceAutoConfiguration.class})
+
+@ConditionalOnBean(annotation = {Configuration.class, EnableEmbeddedKeycloak.class})
 @Configuration
 public class EmbeddedKeycloakConfig {
 
