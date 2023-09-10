@@ -1,0 +1,31 @@
+package com.github.wnameless.spring.boot.up.embedded.keycloak.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+@Configuration
+public class KeycloakConnectionJpaConfig {
+
+  @Autowired
+  public KeycloakConnectionJpaConfig(Environment environment,
+      KeycloakConnectionsJpaProperties keycloakConnectionsJpaProperties) {
+    System.getProperties().setProperty("keycloak.connectionsJpa.url",
+        keycloakConnectionsJpaProperties.getUrl());
+    System.getProperties().setProperty("keycloak.connectionsJpa.driver",
+        keycloakConnectionsJpaProperties.getDriver());
+    System.getProperties().setProperty("keycloak.connectionsJpa.driverDialect",
+        keycloakConnectionsJpaProperties.getDriverDialect());
+    System.getProperties().setProperty("keycloak.connectionsJpa.user",
+        keycloakConnectionsJpaProperties.getUser());
+    System.getProperties().setProperty("keycloak.connectionsJpa.password",
+        keycloakConnectionsJpaProperties.getPassword());
+    System.getProperties().setProperty("keycloak.connectionsJpa.showSql",
+        String.valueOf(keycloakConnectionsJpaProperties.isShowSql()));
+    System.getProperties().setProperty("keycloak.connectionsJpa.formatSql",
+        String.valueOf(keycloakConnectionsJpaProperties.isFormatSql()));
+    System.getProperties().setProperty("keycloak.connectionsJpa.globalStatsInterval",
+        String.valueOf(keycloakConnectionsJpaProperties.getGlobalStatsInterval()));
+  }
+
+}
