@@ -18,11 +18,48 @@
   <name>spring-boot-up-embedded-keycloak</name>
   <description>Embedded Keycloak brought by spring-boot-up</description>
 
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:wnameless/spring-boot-up-embedded-keycloak.git</connection>
+    <developerConnection>scm:git:git@github.com:wnameless/spring-boot-up-embedded-keycloak.git</developerConnection>
+    <url>git@github.com:wnameless/spring-boot-up-embedded-keycloak.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>wnameless</id>
+      <name>Wei-Ming Wu</name>
+      <email>wnameless@gmail.com</email>
+    </developer>
+  </developers>
+
   <properties>
     <java.version>17</java.version>
     <keycloak.version>22.0.1</keycloak.version>
     <resteasy.version>6.2.5.Final</resteasy.version>
   </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <name>OSSRH Nexus Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <name>Sonatype Nexus Staging</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
     <!-- Spring Boot -->
@@ -99,6 +136,17 @@
               <version>1.1.1</version>
             </path>
           </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
         </configuration>
       </plugin>
     </plugins>
