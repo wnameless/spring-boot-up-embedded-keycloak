@@ -8,9 +8,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import com.github.wnameless.spring.boot.up.SpringBootUpApplicationContextProvider;
 
-@DependsOn(SpringBootUpApplicationContextProvider.BEAN_NAME)
 @ConditionalOnBean(annotation = {Configuration.class, EnableEmbeddedKeycloak.class})
 @Configuration
 public class EmbeddedKeycloakConfig {
