@@ -22,7 +22,8 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 
   protected void loadConfig() {
     ConfigProviderFactory factory = new KeycloakJsonConfigProviderFactory();
-    Config.init(factory.create().orElseThrow(() -> new NoSuchElementException("No value present")));
+    Config.init(factory.create()
+        .orElseThrow(() -> new NoSuchElementException("No Keycloak server config present")));
   }
 
   @Override
@@ -59,10 +60,10 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
       session.getTransactionManager().begin();
 
       RealmManager manager = new RealmManager(session);
-      Resource lessonRealmImportFile = new ClassPathResource(
+      Resource realmImportFile = new ClassPathResource(
           KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile());
-      manager.importRealm(JsonSerialization.readValue(lessonRealmImportFile.getInputStream(),
-          RealmRepresentation.class));
+      manager.importRealm(
+          JsonSerialization.readValue(realmImportFile.getInputStream(), RealmRepresentation.class));
 
       session.getTransactionManager().commit();
     } catch (Exception ex) {

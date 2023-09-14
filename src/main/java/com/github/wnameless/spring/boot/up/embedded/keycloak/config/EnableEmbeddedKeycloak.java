@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 @Inherited
 @Documented
@@ -17,5 +17,6 @@ import org.springframework.context.annotation.ComponentScan;
 @Retention(RetentionPolicy.RUNTIME)
 @EnableAutoConfiguration(
     exclude = {LiquibaseAutoConfiguration.class, DataSourceAutoConfiguration.class})
-@ComponentScan(basePackageClasses = EnableEmbeddedKeycloak.class)
+@Import({EmbeddedKeycloakConfig.class, KeycloakConnectionJpaConfig.class,
+    KeycloakServerPropertiesHolder.class})
 public @interface EnableEmbeddedKeycloak {}
