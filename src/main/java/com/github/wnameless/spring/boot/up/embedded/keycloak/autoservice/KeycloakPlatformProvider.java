@@ -47,7 +47,7 @@ public class KeycloakPlatformProvider implements PlatformProvider {
 
   @Override
   public String name() {
-    return "spring-boot-up-keycloak-server";
+    return "spring-boot-up-embedded-keycloak";
   }
 
 }
