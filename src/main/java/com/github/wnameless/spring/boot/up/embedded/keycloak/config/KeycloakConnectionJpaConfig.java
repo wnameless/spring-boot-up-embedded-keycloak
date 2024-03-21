@@ -29,6 +29,8 @@ public class KeycloakConnectionJpaConfig {
         String.valueOf(keycloakConnectionsJpaProperties.isFormatSql()));
     System.getProperties().setProperty("keycloak.connectionsJpa.globalStatsInterval",
         String.valueOf(keycloakConnectionsJpaProperties.getGlobalStatsInterval()));
+    System.getProperties().setProperty("liquibase.ShouldRun",
+        String.valueOf(keycloakConnectionsJpaProperties.getLiquibaseShouldRun()));
   }
 
 }
