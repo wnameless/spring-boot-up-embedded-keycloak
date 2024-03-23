@@ -1,6 +1,5 @@
 package com.github.wnameless.spring.boot.up.embedded.keycloak.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class KeycloakConnectionJpaConfig {
 
-  @Autowired
   public KeycloakConnectionJpaConfig(Environment environment,
       KeycloakConnectionsJpaProperties keycloakConnectionsJpaProperties) {
     System.getProperties().setProperty("keycloak.connectionsJpa.url",
