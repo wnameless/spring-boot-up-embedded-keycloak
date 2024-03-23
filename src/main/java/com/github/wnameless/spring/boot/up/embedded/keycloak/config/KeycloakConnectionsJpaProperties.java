@@ -21,7 +21,7 @@ public class KeycloakConnectionsJpaProperties {
 
   int globalStatsInterval = -1;
 
-  boolean liquibaseShouldRun = false;
+  // boolean liquibaseShouldRun = false;
 
   public String getUrl() {
     return this.url;
@@ -95,12 +95,12 @@ public class KeycloakConnectionsJpaProperties {
     this.globalStatsInterval = globalStatsInterval;
   }
 
-  public boolean getLiquibaseShouldRun() {
-    return liquibaseShouldRun;
-  }
+  // public boolean getLiquibaseShouldRun() {
+  // return liquibaseShouldRun;
+  // }
 
-  public void setLiquibaseShouldRun(boolean liquibaseShouldRun) {
-    this.liquibaseShouldRun = liquibaseShouldRun;
-  }
+  // public void setLiquibaseShouldRun(boolean liquibaseShouldRun) {
+  // this.liquibaseShouldRun = liquibaseShouldRun;
+  // }
 
 }
