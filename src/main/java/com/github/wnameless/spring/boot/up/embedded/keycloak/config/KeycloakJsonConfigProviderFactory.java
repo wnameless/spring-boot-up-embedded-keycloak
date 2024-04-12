@@ -17,7 +17,6 @@ public class KeycloakJsonConfigProviderFactory extends JsonConfigProviderFactory
   private static final Logger LOG =
       LoggerFactory.getLogger(KeycloakJsonConfigProviderFactory.class);
 
-  @SuppressWarnings("null")
   @Override
   public Optional<ConfigProvider> create() {
     JsonNode node = null;
