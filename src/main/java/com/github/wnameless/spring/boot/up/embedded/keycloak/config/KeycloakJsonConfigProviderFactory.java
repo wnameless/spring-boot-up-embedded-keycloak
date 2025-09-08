@@ -12,11 +12,28 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
+/**
+ * Factory for creating JSON-based configuration providers for Keycloak.
+ * This factory attempts to load configuration from:
+ * <ol>
+ *   <li>keycloak-server.json file in the classpath</li>
+ *   <li>Parent factory's configuration source</li>
+ *   <li>Built-in configuration template as fallback</li>
+ * </ol>
+ * 
+ * @author Wei-Ming Wu
+ */
 public class KeycloakJsonConfigProviderFactory extends JsonConfigProviderFactory {
 
   private static final Logger LOG =
       LoggerFactory.getLogger(KeycloakJsonConfigProviderFactory.class);
 
+  /**
+   * Creates a configuration provider by attempting to load JSON configuration
+   * from various sources in order of preference.
+   * 
+   * @return an Optional containing the ConfigProvider if configuration is found
+   */
   @Override
   public Optional<ConfigProvider> create() {
     JsonNode node = null;

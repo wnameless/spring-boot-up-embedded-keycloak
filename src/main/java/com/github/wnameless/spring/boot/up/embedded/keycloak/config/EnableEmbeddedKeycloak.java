@@ -10,6 +10,25 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * Enables embedded Keycloak server in a Spring Boot application.
+ * This annotation imports all necessary configurations and excludes
+ * Liquibase auto-configuration to prevent conflicts with Keycloak's
+ * database management.
+ * 
+ * <p>Usage example:</p>
+ * <pre>
+ * {@code @EnableEmbeddedKeycloak}
+ * {@code @SpringBootApplication}
+ * public class Application {
+ *     public static void main(String[] args) {
+ *         SpringApplication.run(Application.class, args);
+ *     }
+ * }
+ * </pre>
+ * 
+ * @author Wei-Ming Wu
+ */
 @Inherited
 @Documented
 @Target(ElementType.TYPE)

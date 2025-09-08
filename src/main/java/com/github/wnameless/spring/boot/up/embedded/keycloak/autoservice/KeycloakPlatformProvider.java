@@ -9,9 +9,20 @@ import org.keycloak.platform.PlatformProvider;
 import org.keycloak.services.ServicesLogger;
 import com.google.auto.service.AutoService;
 
+/**
+ * Platform provider implementation for embedded Keycloak.
+ * This class provides platform-specific functionality required by Keycloak
+ * to run in an embedded Spring Boot environment.
+ * 
+ * @author Wei-Ming Wu
+ */
 @AutoService(PlatformProvider.class)
 public class KeycloakPlatformProvider implements PlatformProvider {
 
+  /**
+   * Constructs the platform provider and configures the Keycloak profile
+   * using system properties and properties files.
+   */
   public KeycloakPlatformProvider() {
     Profile.configure(new PropertiesProfileConfigResolver(System.getProperties()),
         new PropertiesFileProfileConfigResolver());

@@ -16,16 +16,34 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import com.github.wnameless.spring.boot.up.embedded.keycloak.config.KeycloakServerProperties.AdminUser;
 
+/**
+ * Keycloak application class for embedded deployment.
+ * This class extends Keycloak's base application to provide custom initialization
+ * including configuration loading, admin user creation, and realm import.
+ * 
+ * @author Wei-Ming Wu
+ */
 public class EmbeddedKeycloakApplication extends KeycloakApplication {
 
   private static final Logger LOG = LoggerFactory.getLogger(EmbeddedKeycloakApplication.class);
 
+  /**
+   * Loads the Keycloak configuration using the custom JSON config provider.
+   * 
+   * @throws NoSuchElementException if no configuration is present
+   */
   protected void loadConfig() {
     ConfigProviderFactory factory = new KeycloakJsonConfigProviderFactory();
     Config.init(factory.create()
         .orElseThrow(() -> new NoSuchElementException("No Keycloak server config present")));
   }
 
+  /**
+   * Bootstraps the Keycloak server with initial configuration.
+   * Creates the master realm admin user and imports realm configurations.
+   * 
+   * @return the ExportImportManager instance
+   */
   @Override
   protected ExportImportManager bootstrap() {
     ExportImportManager exportImportManager = super.bootstrap();
@@ -34,6 +52,10 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     return exportImportManager;
   }
 
+  /**
+   * Creates the admin user in the master realm.
+   * The admin credentials are retrieved from the server properties.
+   */
   private void createMasterRealmAdminUser() {
     KeycloakSession session = getSessionFactory().create();
 
@@ -53,6 +75,10 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     session.close();
   }
 
+  /**
+   * Imports realm configuration from a JSON file.
+   * The realm file path is configured in the server properties.
+   */
   private void createKeycloakRealm() {
     KeycloakSession session = getSessionFactory().create();
 

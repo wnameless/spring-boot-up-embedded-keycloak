@@ -1,7 +1,27 @@
 package com.github.wnameless.spring.boot.up.embedded.keycloak.config;
 
+/**
+ * Template class containing the default Keycloak server configuration in JSON format.
+ * This configuration template defines various Keycloak subsystems including storage providers,
+ * caching, clustering, database connections, and authentication settings.
+ * 
+ * @author Wei-Ming Wu
+ */
 public final class KeycloakServerConfigTemplate {
 
+  /**
+   * The default Keycloak server configuration as a JSON string.
+   * This configuration includes settings for:
+   * <ul>
+   *   <li>Hostname configuration</li>
+   *   <li>Event store providers</li>
+   *   <li>Various storage providers (realm, client, user, etc.)</li>
+   *   <li>Session management</li>
+   *   <li>Database connections (JPA)</li>
+   *   <li>Caching configurations</li>
+   *   <li>Authentication protocols</li>
+   * </ul>
+   */
   public static final String JSON_STRING =
       """
             {

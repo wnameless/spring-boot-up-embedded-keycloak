@@ -5,10 +5,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * Configuration component that bridges Spring Boot JPA properties with Keycloak's
+ * JPA connection settings. This class sets system properties that Keycloak uses
+ * for database connectivity.
+ * 
+ * @author Wei-Ming Wu
+ */
 @ConditionalOnBean(annotation = {Configuration.class, EnableEmbeddedKeycloak.class})
 @Component
 public class KeycloakConnectionJpaConfig {
 
+  /**
+   * Constructs the JPA configuration and sets system properties for Keycloak.
+   * 
+   * @param environment the Spring environment
+   * @param keycloakConnectionsJpaProperties the JPA connection properties
+   */
   public KeycloakConnectionJpaConfig(Environment environment,
       KeycloakConnectionsJpaProperties keycloakConnectionsJpaProperties) {
     System.getProperties().setProperty("keycloak.connectionsJpa.url",

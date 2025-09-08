@@ -6,6 +6,13 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.keycloak.common.util.ResteasyProvider;
 import com.google.auto.service.AutoService;
 
+/**
+ * RESTEasy provider implementation for JAX-RS 3.0 compatibility.
+ * This class bridges Keycloak's RESTEasy integration with RESTEasy 6.x,
+ * which implements Jakarta EE JAX-RS 3.0 specification.
+ * 
+ * @author Wei-Ming Wu
+ */
 @AutoService(ResteasyProvider.class)
 public class ResteasyJaxrs3Provider implements ResteasyProvider {
 

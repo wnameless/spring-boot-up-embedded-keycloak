@@ -9,8 +9,24 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Servlet filter for managing Keycloak requests in an embedded environment.
+ * This filter handles session management and client connection setup for incoming requests
+ * to the embedded Keycloak server.
+ * 
+ * @author Wei-Ming Wu
+ */
 public class EmbeddedKeycloakRequestFilter extends AbstractRequestFilter implements Filter {
 
+  /**
+   * Processes incoming requests to the embedded Keycloak server.
+   * Sets up the character encoding and creates a client connection for the request.
+   * 
+   * @param servletRequest the servlet request
+   * @param servletResponse the servlet response
+   * @param filterChain the filter chain for request processing
+   * @throws UnsupportedEncodingException if UTF-8 encoding is not supported
+   */
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
       FilterChain filterChain) throws UnsupportedEncodingException {
@@ -26,6 +42,13 @@ public class EmbeddedKeycloakRequestFilter extends AbstractRequestFilter impleme
     });
   }
 
+  /**
+   * Creates a ClientConnection from the HTTP servlet request.
+   * This connection provides network information about the client.
+   * 
+   * @param request the HTTP servlet request
+   * @return a ClientConnection implementation with request network details
+   */
   private ClientConnection createConnection(HttpServletRequest request) {
     return new ClientConnection() {
 
