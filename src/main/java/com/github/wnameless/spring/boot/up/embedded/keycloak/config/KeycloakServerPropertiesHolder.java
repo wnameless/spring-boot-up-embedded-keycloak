@@ -22,8 +22,14 @@ public class KeycloakServerPropertiesHolder {
 
   /**
    * Static reference to the server properties.
+   * Volatile ensures visibility across threads.
    */
-  private static KeycloakServerProperties keycloakServerProperties;
+  private static volatile KeycloakServerProperties keycloakServerProperties;
+
+  /**
+   * Lock object for synchronization.
+   */
+  private static final Object lock = new Object();
 
   /**
    * Constructs the holder and sets the static properties reference.
@@ -31,7 +37,9 @@ public class KeycloakServerPropertiesHolder {
    * @param keycloakServerProperties the server properties to hold
    */
   KeycloakServerPropertiesHolder(KeycloakServerProperties keycloakServerProperties) {
-    KeycloakServerPropertiesHolder.keycloakServerProperties = keycloakServerProperties;
+    synchronized (lock) {
+      KeycloakServerPropertiesHolder.keycloakServerProperties = keycloakServerProperties;
+    }
   }
 
   /**
@@ -50,7 +58,9 @@ public class KeycloakServerPropertiesHolder {
    */
   public static void setKeycloakServerProperties(
       KeycloakServerProperties keycloakServerProperties) {
-    KeycloakServerPropertiesHolder.keycloakServerProperties = keycloakServerProperties;
+    synchronized (lock) {
+      KeycloakServerPropertiesHolder.keycloakServerProperties = keycloakServerProperties;
+    }
   }
 
 }
