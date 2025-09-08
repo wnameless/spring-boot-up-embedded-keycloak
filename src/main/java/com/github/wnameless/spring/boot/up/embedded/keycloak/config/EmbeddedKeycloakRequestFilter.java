@@ -37,7 +37,8 @@ public class EmbeddedKeycloakRequestFilter extends AbstractRequestFilter impleme
       try {
         filterChain.doFilter(servletRequest, servletResponse);
       } catch (Exception e) {
-        throw new RuntimeException(e);
+        // Preserve the original exception context
+        throw new RuntimeException("Error processing request through Keycloak filter", e);
       }
     });
   }

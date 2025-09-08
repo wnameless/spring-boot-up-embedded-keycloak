@@ -68,11 +68,15 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 
       session.getTransactionManager().commit();
     } catch (Exception ex) {
-      LOG.warn("Can NOT create Keycloak master admin user: {}", ex.getMessage());
-      session.getTransactionManager().rollback();
+      LOG.warn("Cannot create Keycloak master admin user: {}", ex.getMessage(), ex);
+      try {
+        session.getTransactionManager().rollback();
+      } catch (Exception rollbackEx) {
+        LOG.error("Failed to rollback transaction after admin user creation failure", rollbackEx);
+      }
+    } finally {
+      session.close();
     }
-
-    session.close();
   }
 
   /**
@@ -86,18 +90,32 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
       session.getTransactionManager().begin();
 
       RealmManager manager = new RealmManager(session);
-      Resource realmImportFile = new ClassPathResource(
-          KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile());
-      manager.importRealm(
-          JsonSerialization.readValue(realmImportFile.getInputStream(), RealmRepresentation.class));
+      String realmImportPath = KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile();
+      Resource realmImportFile = new ClassPathResource(realmImportPath);
+      
+      if (!realmImportFile.exists()) {
+        LOG.info("Realm import file not found at: {}. Skipping realm import.", realmImportPath);
+        session.getTransactionManager().commit();
+        return;
+      }
+      
+      RealmRepresentation realmRep = JsonSerialization.readValue(
+          realmImportFile.getInputStream(), RealmRepresentation.class);
+      manager.importRealm(realmRep);
+      LOG.info("Successfully imported realm from: {}", realmImportPath);
 
       session.getTransactionManager().commit();
     } catch (Exception ex) {
-      LOG.warn("Failed to import Realm json file: {}", ex.getMessage());
-      session.getTransactionManager().rollback();
+      LOG.error("Failed to import realm configuration from file: {}", 
+          KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile(), ex);
+      try {
+        session.getTransactionManager().rollback();
+      } catch (Exception rollbackEx) {
+        LOG.error("Failed to rollback transaction after realm import failure", rollbackEx);
+      }
+    } finally {
+      session.close();
     }
-
-    session.close();
   }
 
 }
