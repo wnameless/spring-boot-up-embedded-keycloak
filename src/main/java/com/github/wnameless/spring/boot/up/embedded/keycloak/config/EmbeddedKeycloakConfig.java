@@ -10,35 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 /**
- * Spring configuration class for the embedded Keycloak server.
- * This configuration is activated when the @EnableEmbeddedKeycloak annotation is present.
- * It configures the RESTEasy servlet, request filters, and connection properties.
+ * Spring configuration class for the embedded Keycloak server. This configuration is activated when
+ * the @EnableEmbeddedKeycloak annotation is present. It configures the RESTEasy servlet, request
+ * filters, and connection properties.
  * 
  * @author Wei-Ming Wu
  */
 @ConditionalOnBean(annotation = {Configuration.class, EnableEmbeddedKeycloak.class})
 @Configuration
 public class EmbeddedKeycloakConfig {
-
-  /**
-   * Creates the JPA connection properties bean for Keycloak database configuration.
-   * 
-   * @return the KeycloakConnectionsJpaProperties instance
-   */
-  @Bean
-  KeycloakConnectionsJpaProperties KeycloakConnectionsJpaProperties() {
-    return new KeycloakConnectionsJpaProperties();
-  }
-
-  /**
-   * Creates the Keycloak server properties bean.
-   * 
-   * @return the KeycloakServerProperties instance
-   */
-  @Bean
-  KeycloakServerProperties keycloakServerProperties() {
-    return new KeycloakServerProperties();
-  }
 
   /**
    * Registers the RESTEasy servlet for handling Keycloak JAX-RS endpoints.
