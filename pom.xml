@@ -13,7 +13,7 @@
 
   <groupId>com.github.wnameless.spring.boot.up</groupId>
   <artifactId>spring-boot-up-embedded-keycloak</artifactId>
-  <version>3.24.0-SNAPSHOT</version>
+  <version>24.3.0.0-SNAPSHOT</version>
 
   <name>spring-boot-up-embedded-keycloak</name>
   <description>Embedded Keycloak brought by spring-boot-up</description>

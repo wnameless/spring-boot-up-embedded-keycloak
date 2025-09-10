@@ -26,6 +26,17 @@ If you need a **fully Spring-integrated authentication solution** with Keycloak,
 
 Choose this project if you need just an embedded Keycloak server for development/testing. Choose the Keycloak Plugin if you need full Spring Security integration with the embedded Keycloak server.
 
+## Version Numbering
+
+This library uses a 4-digit versioning scheme: `KEYCLOAK.SPRINGBOOT.MAJOR.MINOR`
+
+For example, version `24.3.0.0` means:
+- **24** - Keycloak major version
+- **3** - Spring Boot major version  
+- **0.0** - Library version (major.minor)
+
+This scheme makes it easy to identify compatibility at a glance, with Keycloak version first since it changes more frequently than Spring Boot.
+
 ## Requirements
 
 - Java 17 or higher
@@ -41,13 +52,13 @@ Choose this project if you need just an embedded Keycloak server for development
 <dependency>
     <groupId>com.github.wnameless.spring.boot.up</groupId>
     <artifactId>spring-boot-up-embedded-keycloak</artifactId>
-    <version>3.24.0</version>
+    <version>24.3.0.0</version>
 </dependency>
 ```
 
 #### Gradle
 ```gradle
-implementation 'com.github.wnameless.spring.boot.up:spring-boot-up-embedded-keycloak:3.24.0'
+implementation 'com.github.wnameless.spring.boot.up:spring-boot-up-embedded-keycloak:24.3.0.0'
 ```
 
 ### 2. Enable Embedded Keycloak
