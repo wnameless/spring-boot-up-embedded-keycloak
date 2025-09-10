@@ -14,6 +14,18 @@ A Spring Boot library that provides an embedded Keycloak server for development 
 - 🔐 **Admin User Creation** - Auto-create admin user for master realm
 - 🌐 **RESTEasy Integration** - Full JAX-RS 3.0 support with Jakarta EE
 
+## Related Projects
+
+### Spring Boot Up - Keycloak Plugin
+
+If you need a **fully Spring-integrated authentication solution** with Keycloak, rather than just a standalone embedded Keycloak server, check out the [Spring Boot Up - Keycloak Plugin](https://github.com/wnameless/spring-boot-up-keycloak-plugin) project.
+
+**Key differences:**
+- **This project** (`spring-boot-up-embedded-keycloak`): Provides a standalone embedded Keycloak server within your Spring Boot application. Perfect for development/testing when you need a full Keycloak instance.
+- **Keycloak Plugin** (`spring-boot-up-keycloak-plugin`): Offers complete Spring Security integration with the embedded Keycloak server, including authentication filters, security configurations, and seamless Spring Boot integration for production use.
+
+Choose this project if you need just an embedded Keycloak server for development/testing. Choose the Keycloak Plugin if you need full Spring Security integration with the embedded Keycloak server.
+
 ## Requirements
 
 - Java 17 or higher
