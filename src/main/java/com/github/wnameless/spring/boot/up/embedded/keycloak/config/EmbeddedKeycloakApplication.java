@@ -17,9 +17,9 @@ import org.springframework.core.io.Resource;
 import com.github.wnameless.spring.boot.up.embedded.keycloak.config.KeycloakServerProperties.AdminUser;
 
 /**
- * Keycloak application class for embedded deployment.
- * This class extends Keycloak's base application to provide custom initialization
- * including configuration loading, admin user creation, and realm import.
+ * Keycloak application class for embedded deployment. This class extends Keycloak's base
+ * application to provide custom initialization including configuration loading, admin user
+ * creation, and realm import.
  * 
  * @author Wei-Ming Wu
  */
@@ -39,8 +39,8 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
   }
 
   /**
-   * Bootstraps the Keycloak server with initial configuration.
-   * Creates the master realm admin user and imports realm configurations.
+   * Bootstraps the Keycloak server with initial configuration. Creates the master realm admin user
+   * and imports realm configurations.
    * 
    * @return the ExportImportManager instance
    */
@@ -53,8 +53,8 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
   }
 
   /**
-   * Creates the admin user in the master realm.
-   * The admin credentials are retrieved from the server properties.
+   * Creates the admin user in the master realm. The admin credentials are retrieved from the server
+   * properties.
    */
   private void createMasterRealmAdminUser() {
     KeycloakSession session = getSessionFactory().create();
@@ -80,8 +80,8 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
   }
 
   /**
-   * Imports realm configuration from a JSON file.
-   * The realm file path is configured in the server properties.
+   * Imports realm configuration from a JSON file. The realm file path is configured in the server
+   * properties. Only imports if the realm does not already exist in the database.
    */
   private void createKeycloakRealm() {
     KeycloakSession session = getSessionFactory().create();
@@ -89,25 +89,43 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     try {
       session.getTransactionManager().begin();
 
-      RealmManager manager = new RealmManager(session);
-      String realmImportPath = KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile();
+      String realmImportPath =
+          KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile();
       Resource realmImportFile = new ClassPathResource(realmImportPath);
-      
+
       if (!realmImportFile.exists()) {
         LOG.info("Realm import file not found at: {}. Skipping realm import.", realmImportPath);
         session.getTransactionManager().commit();
         return;
       }
-      
-      RealmRepresentation realmRep = JsonSerialization.readValue(
-          realmImportFile.getInputStream(), RealmRepresentation.class);
+
+      RealmRepresentation realmRep =
+          JsonSerialization.readValue(realmImportFile.getInputStream(), RealmRepresentation.class);
+
+      String realmId = realmRep.getId() != null ? realmRep.getId() : realmRep.getRealm();
+
+      if (realmId == null) {
+        LOG.warn("Realm import file does not contain a valid realm ID or name. Skipping import.");
+        session.getTransactionManager().commit();
+        return;
+      }
+
+      if (session.realms().getRealm(realmId) != null) {
+        LOG.debug("Realm '{}' already exists. Skipping import.", realmId);
+        session.getTransactionManager().commit();
+        return;
+      }
+
+      RealmManager manager = new RealmManager(session);
       manager.importRealm(realmRep);
-      LOG.info("Successfully imported realm from: {}", realmImportPath);
+      LOG.info("Successfully imported realm '{}' from: {}", realmId, realmImportPath);
 
       session.getTransactionManager().commit();
     } catch (Exception ex) {
-      LOG.error("Failed to import realm configuration from file: {}", 
-          KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile(), ex);
+      LOG.warn("Could not import realm from file '{}': {}",
+          KeycloakServerPropertiesHolder.getKeycloakServerProperties().getRealmImportFile(),
+          ex.getMessage());
+      LOG.debug("Realm import error details", ex);
       try {
         session.getTransactionManager().rollback();
       } catch (Exception rollbackEx) {
