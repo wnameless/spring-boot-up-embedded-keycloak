@@ -17,6 +17,7 @@
 
   <name>spring-boot-up-embedded-keycloak</name>
   <description>Embedded Keycloak brought by spring-boot-up</description>
+  <url>https://github.com/wnameless/spring-boot-up-embedded-keycloak</url>
 
   <licenses>
     <license>
